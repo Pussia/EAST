@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModelXml"
+            type="com.soloupis.sample.ocr_keras.fragments.ocr.OcrViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.soloupis.sample.ocr_keras.fragments.ocr.OcrFragment">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="84dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <FrameLayout
+                    android:id="@+id/frame_output"
+                    android:layout_width="244dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="40dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recyclerViewImages">
+
+                    <ImageView
+                        android:id="@+id/imageview_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/dark_gray_border"
+                        android:visibility="gone" />
+
+                    <ProgressBar
+                        android:id="@+id/progressbar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:indeterminateTint="@color/dark_gray"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/imageview_output"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/light_gray_border"
+                        android:visibility="visible" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/headerKerasOcr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/keras_ocr_result"
+                    android:textAlignment="center"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/frame_output" />
+
+                <TextView
+                    android:id="@+id/textViewOcrResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAlignment="center"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textSize="28sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/headerKerasOcr" />
+
+                <TextView
+                    android:id="@+id/inferenceTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/inference_time_0ms"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewOcrResult" />
+
+                <View
+                    android:id="@+id/viewHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#ededed"
+                    app:layout_constraintTop_toBottomOf="@id/inferenceTime" />
+
+                <TextView
+                    android:id="@+id/headerKerasOcrML"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/ml_kit_result"
+                    android:textAlignment="center"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewHorizontal" />
+
+                <TextView
+                    android:id="@+id/textViewOcrResultML"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{viewModelXml.mlKitOcrtext}"
+                    android:textAlignment="center"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textSize="28sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/headerKerasOcrML" />
+
+                <TextView
+                    android:id="@+id/inferenceTimeML"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="@{`Inference time: ` + viewModelXml.inferenceTimeMlKit + `ms`}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewOcrResultML" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

@@ -1,0 +1,96 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs"
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.soloupis.ocr_keras"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    aaptOptions {
+        noCompress "tflite"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        dataBinding = true
+        mlModelBinding true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+}
+
+dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'org.apache.commons:commons-compress:1.20'
+    implementation 'com.google.android.material:material:1.2.1'
+
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // Navigation library
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.2"
+    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
+
+    // TensorFlow Lite dependencies
+    def tfl_version = "0.0.0-nightly"
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc2'
+    implementation("org.tensorflow:tensorflow-lite:${tfl_version}") { changing = true }
+    implementation("org.tensorflow:tensorflow-lite-gpu:${tfl_version}") { changing = true }
+    implementation 'org.tensorflow:tensorflow-lite-support:0.0.0-nightly'
+    implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:0.0.0-nightly'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
+    // Kotlin Coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7'
+
+    // Koin for Kotlin
+    def koin_version = "2.1.5"
+    implementation "org.koin:koin-core:$koin_version"
+    // Koin for Android
+    implementation "org.koin:koin-android:$koin_version"
+    // Koin Android Scope features
+    implementation "org.koin:koin-android-scope:$koin_version"
+    // Koin Android ViewModel features
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    // ML kit - Text Recognition
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.1.2'
+}

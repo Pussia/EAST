@@ -1,0 +1,2 @@
+rootProject.name='ocr_keras'
+include ':app'
